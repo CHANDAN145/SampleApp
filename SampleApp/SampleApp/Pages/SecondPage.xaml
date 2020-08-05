@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="SampleApp.Pages.SecondPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:SampleApp.Behaviors;assembly=SampleApp"
+             xmlns:converters="clr-namespace:SampleApp.Converters;assembly=SampleApp">
+    <ContentPage.Resources>
+        <converters:QuantityStringConverter x:Key="quantityStringConverter" />
+        <converters:MultiTriggerConverter x:Key="dataHasBeenEntered" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Label Text="Form 1" />
+            <Entry x:Name="numberOfCartons"
+                   Keyboard="Numeric"
+                   Placeholder="Number of Cartons"
+                   Text="{Binding DataModel.NumberOfCartons, Mode=TwoWay}" />
+            <Label Text="{Binding DataModel.NumberOfCartons, Converter={StaticResource quantityStringConverter}, ConverterParameter='Carton'}" />
+            <Entry x:Name="numberOfShelves"
+                   Keyboard="Numeric"
+                   Placeholder="Number of Shelves"
+                   Text="{Binding DataModel.NumberOfShelves}">
+                <Entry.Behaviors>
+                    <behaviors:EventToCommand Command="{Binding EntryChangedCommand}" EventName="Completed" />
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="{Binding DataModel.NumberOfShelves, Converter={StaticResource quantityStringConverter}, ConverterParameter='Shelf'}" />
+            <TimePicker Time="{Binding DataModel.SelectedTime, Mode=TwoWay}" />
+            <Label Text="{Binding DataModel.SelectedTime, Converter={StaticResource quantityStringConverter}, ConverterParameter='Time'}" />
+            <Button Command="{Binding SubmitCommand}"
+                    HorizontalOptions="CenterAndExpand"
+                    IsEnabled="false"
+                    Text="Submit">
+                <Button.Triggers>
+                    <MultiTrigger TargetType="Button">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding Source={x:Reference numberOfCartons}, Path=Text.Length, Converter={StaticResource dataHasBeenEntered}}" Value="true" />
+                            <BindingCondition Binding="{Binding Source={x:Reference numberOfShelves}, Path=Text.Length, Converter={StaticResource dataHasBeenEntered}}" Value="true" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="IsEnabled" Value="True" />
+                    </MultiTrigger>
+                </Button.Triggers>
+            </Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="SampleApp.Pages.FirstPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:SampleApp.Converters;assembly=SampleApp">
+    <ContentPage.Resources>
+        <converters:QuantityStringConverter x:Key="quantityStringConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Label x:Name="label"
+                   FontSize="Large"
+                   Text="{Binding DataModel.Name, Converter={StaticResource quantityStringConverter}, ConverterParameter='man'}" />
+            <Button Command="{Binding CloseCommand}" Text="Close App" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

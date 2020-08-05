@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="SampleApp.Pages.HomePage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label HorizontalTextAlignment="Center"
+                   Text="Home Page"
+                   VerticalTextAlignment="Center" />
+            <Button Command="{Binding NextPageCommand}" Text="Next Page" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
